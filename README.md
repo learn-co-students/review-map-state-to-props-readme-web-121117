@@ -17,7 +17,7 @@ Remember that we encounter mapStateToProps when using the connect function.   In
 
 ```javascript
 // ./src/App.js
-... 
+...
 
 connect(mapStateToProps)(App)
 ```
@@ -25,8 +25,8 @@ connect(mapStateToProps)(App)
 Meaning that we want to connect our __App__ component to a slice of the store's state specified in __mapStateToProps()__. Currently our __mapStateToProps()__ looks like the following:
 
 ```javascript
-// ./src/App.js 
-... 
+// ./src/App.js
+...
 
 const mapStateToProps = (state) => {
   debugger;
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
 
 Yes, we added a debugger to the body of our __mapStateToProps()__ function. So now boot up the app and click on the two buttons. You will see that clicking on the Items Count button renders an update to our __App__ Component, while clicking on the Users Count button does not. This makes sense: inside our App component all we do is reference the items count.  
 
-Ok, now let's open up our console so that we hit our debugger. If you click on each of the buttons, you'll see that our debugger gets hit with each action that we dispatch. So even though we are not updating our __App__ component with information about users, the __mapStateToProps()__ function is executed with each change to the store's state. That's an important point. Say it with me one more time: the __mapStateToProps()__ method is executed with each change to the store's state. 
+Ok, now let's open up our console so that we hit our debugger. If you click on each of the buttons, you'll see that our debugger gets hit with each action that we dispatch. So even though we are not updating our __App__ component with information about users, the __mapStateToProps()__ function is executed with each change to the store's state. That's an important point. Say it with me one more time: the __mapStateToProps()__ method is executed with each change to the store's state.
 
 Ok, now the next time we are in the debugger, let's notice that if you type the word state into the console while inside the __mapStateToProps()__ method, that it is the entire state of the store and not just that relevant to the component.
 
@@ -44,11 +44,11 @@ Next question: what is so special about this __mapStateToProps()__ method that i
 
 ```javascript
 // ./src/App.js
-... 
+...
 
 const vanilla = (milkshake) => {
   debugger;
-  return { items: milksake.items }
+  return { items: milkshake.items }
 }
 
 export default connect(vanilla)(App);
@@ -61,7 +61,7 @@ Essentially, all we did was rename our __mapStateToProps()__ function to __vanil
 So in the previous section we saw that whatever function we pass to the connect function is executed each time there is a change in state, and that the argument that function is executed with is the entire state of the store. Now let's change the function back from __vanilla()__ to __mapStateToProps()__ and let's pay special attention to the return value to that function:
 
 ```javascript
-// ./src/App.js 
+// ./src/App.js
 ...
 const mapStateToProps = (state) => {
   return { items: state.items }
@@ -73,7 +73,7 @@ export default connect(mapStateToProps)(App);
 This return value, is the value of the props that are added to the App component.  Let's see what happens if we change the key in the return value from items to orangePeel.
 
 ```javascript
-// ./src/App.js 
+// ./src/App.js
 ...
 const mapStateToProps = (state) => {
   return { orangePeel: state.items }
@@ -107,19 +107,19 @@ render() {
 If you type in `this.props` while inside the render function, you will see that we now have this.props.orangePeel, which returns our array of numbers. So by changing the key to the return value in __mapStateToProps()__ we changed the name of the prop in __App__. As a second step, let's change the value to orangePeel as well:
 
 ```javascript
-// ./src/App.js 
+// ./src/App.js
 ...
 
 const mapStateToProps = (state) => {
   return { orangePeel: ['a', 'b', 'c'] };
 };
-... 
+...
 ```
 
 Keeping our debugger in our __App__ component's render function, you can see that `this.props.orangePeel` now returns `['a', 'b', 'c']`. So now when we see the following code, perhaps we understand it a little better.
 
 ```javascript
-// ./src/App.js 
+// ./src/App.js
 ...
 
 const mapStateToProps = (state) => {
@@ -138,7 +138,7 @@ By now, you may be thinking, why would __Redux__ choose this whole __mapStateToP
 Separation of concerns is the big win.  Take a look at the __App__ component again:
 
 ```javascript
-// ./src/App.js 
+// ./src/App.js
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
@@ -158,7 +158,7 @@ class App extends Component {
       type: 'GET_COUNT_OF_USERS',
     })
   }
-  
+
   render() {
     debugger;
     return (
